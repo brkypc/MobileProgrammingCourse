@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1068148253916",
+    "firebase_url": "https://mobile-programming-ytu-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mobile-programming-ytu",
+    "storage_bucket": "mobile-programming-ytu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068148253916:android:090d093b7e5e036e9f0019",
+        "android_client_info": {
+          "package_name": "tr.edu.yildiz.berkayyapici"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1068148253916-n2brtlrbmtue3afcv47be0ksjn04m0ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsO3Xb4BJ1pQfEOU6L1Y5o44k26dfKXro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1068148253916-n2brtlrbmtue3afcv47be0ksjn04m0ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

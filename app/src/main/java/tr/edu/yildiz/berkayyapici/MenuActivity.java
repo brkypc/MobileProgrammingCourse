@@ -24,27 +24,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     TextView welcomeText;
     ImageView logout;
 
-    SensorManager sm = null;
-    List list;
-
-    SensorEventListener sel = new SensorEventListener(){
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-        public void onSensorChanged(SensorEvent event) {
-
-            float loX = event.values[0];
-            float loY = event.values[1];
-            float loZ = event.values[2];
-
-            double loAccelerationReader = Math.sqrt(Math.pow(loX, 2)
-                    + Math.pow(loY, 2)
-                    + Math.pow(loZ, 2));
-
-            if (loAccelerationReader > 0.3 && loAccelerationReader < 0.5) {
-                Toast.makeText(MenuActivity.this, "You dropped your phone :)", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +31,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_menu);
         defineVariables();
         defineListeners();
-
-        sm = (SensorManager)getSystemService(SENSOR_SERVICE);
-        list = sm.getSensorList(Sensor.TYPE_ACCELEROMETER);
-        if(list.size()>0){
-            sm.registerListener(sel, (Sensor) list.get(0), SensorManager.SENSOR_DELAY_NORMAL);
-        }else{
-            Toast.makeText(MenuActivity.this, "Error: No Accelerometer.", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(list.size()>0){
-            sm.unregisterListener(sel);
-        }
     }
 
     private void defineVariables() {

@@ -2,22 +2,18 @@ package tr.edu.yildiz.berkayyapici;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -38,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.my_row, parent, false);
+        View view = mInflater.inflate(R.layout.my_question_row, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -52,6 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.radioButton3.setText(choices[position][2]);
         holder.radioButton4.setText(choices[position][3]);
 
+        holder.showAnswer.setVisibility(View.VISIBLE);
         holder.showAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

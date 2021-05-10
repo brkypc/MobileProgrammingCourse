@@ -1,18 +1,9 @@
 package tr.edu.yildiz.berkayyapici;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -21,30 +12,23 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class SignUpActivity extends AppCompatActivity {
     TextView appText, signUpText;
     TextInputLayout fullName, username, email, phoneNo, birthDate, password, reEnterPassword;
     Button signUpButton, goLogin;
     ProgressBar progressBar;
-    DatabaseReference database;
     String userFullName, userUserName, userEmail, userPhoneNo, userBirthDate, userPassword, hashPassword, userReEnterPassword;
-    Calendar calendar, c;
+    Calendar calendar;
     int mYear, mMonth, mDayOfMonth, year, month, dayOfMonth;
     Animation scaleUp, scaleDown;
 
@@ -58,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void defineVariables() {
-        database = FirebaseDatabase.getInstance().getReference("users");
         appText = findViewById(R.id.appText);
         signUpText = findViewById(R.id.signUpText);
         fullName = findViewById(R.id.fullName);
@@ -93,38 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
                     goLogin.setVisibility(View.GONE);
                     progressBar.setVisibility(View.VISIBLE);
 
-                    Query checkUser = database.orderByChild("username").equalTo(userUserName);
-                    checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()) {
-                                username.setError("This username is already in use, please try another one");
-                                signUpButton.setClickable(true);
-                                goLogin.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.GONE);
-                            }
-                            else {
-                                hashPassword = hash(userPassword);
-                                User user = new User(userFullName, userUserName, userEmail, userPhoneNo, userBirthDate, hashPassword);
-                                database.child(userUserName).setValue(user);
 
-                                Toast.makeText(SignUpActivity.this, "You have successfully signed up!", Toast.LENGTH_SHORT).show();
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                },1000);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            //database error
-                        }
-                    });
                 }
             }
         });
@@ -135,16 +87,6 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
-                /*   Pair[] pairs = new Pair[5];
-                pairs[0] = new Pair<View,String>(signUpText, "text_tran");
-                pairs[1] = new Pair<View,String>(username, "username_tran");
-                pairs[2] = new Pair<View,String>(password, "password_tran");
-                pairs[3] = new Pair<View,String>(signUpButton, "button_tran");
-                pairs[4] = new Pair<View,String>(goLogin, "goButton_tran");
-
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SignUpActivity.this, pairs);
-                startActivity(intent, options.toBundle());
-                */
             }
         });
 

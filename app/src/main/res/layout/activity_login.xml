@@ -26,8 +26,7 @@
         android:fontFamily="@font/bungee"
         android:text="Sign in to continue"
         android:textColor="@color/black"
-        android:textSize="40sp"
-        android:transitionName="text_tran" />
+        android:textSize="40sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
-            android:transitionName="username_tran"
             app:endIconMode="clear_text"
             app:endIconTint="@color/black"
             app:errorEnabled="true"
@@ -61,7 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:transitionName="password_tran"
             app:errorEnabled="true"
             app:errorIconDrawable="@null"
             app:passwordToggleEnabled="true"
@@ -78,42 +75,15 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <CheckBox
-            android:id="@+id/rememberMe"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:buttonTint="@color/black"
-            android:text="@string/remember_me"
-            android:textColor="@color/black" />
-
-        <Button
-            android:id="@+id/forgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="-10dp"
-            android:background="@android:color/transparent"
-            android:text="@string/forgot_password_mark"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-    </RelativeLayout>
-
     <Button
         android:id="@+id/loginButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_bg"
         android:text="@string/login"
-        android:textColor="@color/white"
-        android:transitionName="button_tran" />
+        android:textColor="@color/white" />
 
     <Button
         android:id="@+id/goSignUp"
@@ -122,8 +92,7 @@
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:text="@string/new_user_sign_up"
-        android:textColor="@color/black"
-        android:transitionName="goButton_tran" />
+        android:textColor="@color/black" />
 
     <ProgressBar
         android:id="@+id/loginProgressBar"

@@ -2,7 +2,9 @@ package tr.edu.yildiz.berkayyapici;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -38,6 +40,7 @@ public class AddQuestionActivity extends AppCompatActivity {
         scaleDown.setStartOffset(100);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void defineListeners() {
         saveQuestion.setOnClickListener(new View.OnClickListener() {
             @Override

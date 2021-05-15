@@ -1,7 +1,11 @@
 package tr.edu.yildiz.berkayyapici;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -9,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,107 +21,151 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    TextView loginAppText, loginText;
+    TextView attempt;
     TextInputLayout username, password;
     Button loginButton, goSignUp;
     ProgressBar progressBar;
-    String userEnteredUsername, userEnteredPassword, hashPassword;
+
     Animation scaleUp, scaleDown;
+
+    DatabaseHelper databaseHelper;
+
+    String userEnteredUsername, userEnteredPassword, hashPassword, attemptText;
+    int attemptCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setContentView(R.layout.activity_login);
         defineVariables();
         defineListeners();
     }
 
     private void defineVariables() {
-        loginAppText = findViewById(R.id.loginAppText);
-        loginText = findViewById(R.id.loginText);
+        databaseHelper = new DatabaseHelper(LoginActivity.this);
+
+        attempt = findViewById(R.id.attempt);
         username = findViewById(R.id.loginUsername);
         password = findViewById(R.id.loginPassword);
         loginButton = findViewById(R.id.loginButton);
         goSignUp = findViewById(R.id.goSignUp);
         progressBar = findViewById(R.id.loginProgressBar);
+
         scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
         scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
         scaleDown.setStartOffset(100);
     }
 
     private void defineListeners() {
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        loginButton.setOnClickListener(v -> {
+            loginButton.startAnimation(scaleUp);
+            loginButton.startAnimation(scaleDown);
+            if(checkFields()) {
                 loginButton.setClickable(false);
-                validateUser();
-                loginButton.startAnimation(scaleUp);
-                loginButton.startAnimation(scaleDown);
+                hashPassword = hash(userEnteredPassword);
+
+                String passwordFromDB = databaseHelper.getUserLoginInfo(userEnteredUsername);
+
+                if(passwordFromDB.isEmpty()) {
+                    username.setError("There is no such user exists");
+                    username.requestFocus();
+                    loginButton.setClickable(true);
+                    checkAttempt();
+                }
+                else {
+                    if(passwordFromDB.equals(hashPassword)) {
+                        Toast.makeText(LoginActivity.this, "Login is successful. You are redirecting...", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.VISIBLE);
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("currentUser", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("username", userEnteredUsername);
+                        editor.apply();
+
+                        new Handler().postDelayed(() -> {
+                            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
+                            startActivity(intent);
+                            finish();
+                        },1000);
+                    }
+                    else {
+                        password.setError("Wrong password");
+                        password.requestFocus();
+                        loginButton.setClickable(true);
+                        checkAttempt();
+                    }
+                }
+
             }
         });
 
-        goSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goSignUp.setClickable(false);
+        goSignUp.setOnClickListener(v -> {
+            goSignUp.setClickable(false);
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private void checkAttempt() {
+        attemptCount++;
+        attemptText = "Attempt : " + attemptCount + "/3";
+        attempt.setText(attemptText);
+
+        if(attemptCount == 3) {
+            attempt.setTextColor(Color.RED);
+            progressBar.setVisibility(View.VISIBLE);
+            loginButton.setAlpha(.5f);        // make the button color as beautiful gray
+            loginButton.setClickable(false);  // same functionality with setEnabled(false)
+            goSignUp.setClickable(false);
+
+            Toast.makeText(this, "You entered wrong 3 times. You are redirecting to sign up.", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(() -> {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
                 finish();
-            }
-        });
+            },1500);
+        }
     }
 
     private boolean checkFields() {
         boolean validate = true;
 
-        userEnteredUsername = username.getEditText().getText().toString();
-        userEnteredPassword = password.getEditText().getText().toString();
+        userEnteredUsername = Objects.requireNonNull(username.getEditText()).getText().toString();
+        userEnteredPassword = Objects.requireNonNull(password.getEditText()).getText().toString();
 
         if(userEnteredUsername.isEmpty()) {
             username.setError("Field cannot be empty");
             validate = false;
         }
-        else {
-            username.setError(null);
-        }
+        else { username.setError(null); }
 
         if(userEnteredPassword.isEmpty()) {
             password.setError("Field cannot be empty");
             validate = false;
         }
-        else {
-            password.setError(null);
-        }
+        else { password.setError(null); }
 
         return validate;
     }
 
-    private void validateUser() {
-        if(checkFields()) {
-
-        }
-        else
-            loginButton.setClickable(true);
-    }
-
-    public String hash(String s) {
+    public String hash(String password) {
         try {
-            // Create MD5 Hash
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
+            digest.update(password.getBytes());
             byte[] messageDigest = digest.digest();
 
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            StringBuilder hash = new StringBuilder();
+            for (byte b : messageDigest)
+                hash.append(Integer.toHexString(0xFF & b));
 
-            return hexString.toString();
+            return hash.toString();
         }catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.e("myTAG", e.getMessage());
         }
         return "";
     }

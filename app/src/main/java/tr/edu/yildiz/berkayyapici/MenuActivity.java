@@ -4,26 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.util.List;
+import java.io.File;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
     RelativeLayout questionsList, addQuestion, examsList, createExam;
     TextView welcomeText;
-    ImageView logout;
+    ImageView menuPicture;
 
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +31,29 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void defineVariables() {
-        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", MODE_PRIVATE);
-        String name = sharedPreferences.getString("name","");
+        // get current user
+        SharedPreferences sharedPreferences = getSharedPreferences("currentUser", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username","");
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(MenuActivity.this);
+        Cursor cursor = databaseHelper.getUser(username);
+        if(cursor.moveToFirst()) {
+            name = cursor.getString(2);
+        }
+        String welcome = "Welcome " + name;
         welcomeText = findViewById(R.id.welcomeText);
-        welcomeText.setText("Welcome " + name);
-        logout = findViewById(R.id.logout);
+        welcomeText.setText(welcome);
+
+        menuPicture = findViewById(R.id.menuPicture);
+
+        File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File myFolder = new File(folder, "Mobile Programming App/" + username);
+        if (myFolder.exists()) {
+            File file = new File(myFolder, "pp.jpg");
+            if (file.exists())
+                menuPicture.setImageURI(Uri.parse(file.getAbsolutePath()));
+        }
+
         questionsList = findViewById(R.id.first);
         addQuestion = findViewById(R.id.second);
         examsList = findViewById(R.id.third);
@@ -50,37 +65,25 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         addQuestion.setOnClickListener(this);
         examsList.setOnClickListener(this);
         createExam.setOnClickListener(this);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     @Override
     public void onClick(View v) {
         Intent intent;
         if(v.getId() == R.id.first) {
-            intent = new Intent(MenuActivity.this, QuestionsActivity.class);
+            intent = new Intent(MenuActivity.this, AddUpdateQuestionActivity.class);
             startActivity(intent);
         }
         else if(v.getId() == R.id.second) {
-            intent = new Intent(MenuActivity.this, AddQuestionActivity.class);
+            intent = new Intent(MenuActivity.this, QuestionsActivity.class);
             startActivity(intent);
         }
         else if(v.getId() == R.id.third) {
-            intent = new Intent(MenuActivity.this, ExamsActivity.class);
+            intent = new Intent(MenuActivity.this, ExamSettingsActivity.class);
             startActivity(intent);
         }
         else if(v.getId() == R.id.fourth) {
-            intent = new Intent(MenuActivity.this, ExamsActivity.class);
+            intent = new Intent(MenuActivity.this, CreateExamActivity.class);
             startActivity(intent);
         }
     }

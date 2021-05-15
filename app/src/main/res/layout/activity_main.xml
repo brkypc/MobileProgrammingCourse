@@ -1,118 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1F1F1D"
+    android:background="@color/black"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <View
+        android:id="@+id/first_line"
+        android:layout_width="20dp"
+        android:layout_height="50dp"
+        android:background="@drawable/white_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/first_line"
-            android:layout_width="20dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/white_line" />
+    <View
+        android:id="@+id/second_line"
+        android:layout_width="20dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/red_line"
+        app:layout_constraintStart_toEndOf="@id/first_line"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/second_line"
-            android:layout_width="20dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/first_line"
-            android:background="@drawable/red_line" />
+    <View
+        android:id="@+id/third_line"
+        android:layout_width="20dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/green_line"
+        app:layout_constraintStart_toEndOf="@id/second_line"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/third_line"
-            android:layout_width="20dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/second_line"
-            android:background="@drawable/green_line" />
+    <View
+        android:id="@+id/fourth_line"
+        android:layout_width="20dp"
+        android:layout_height="175dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/white_line"
+        app:layout_constraintStart_toEndOf="@id/third_line"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/fourth_line"
-            android:layout_width="20dp"
-            android:layout_height="175dp"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/third_line"
-            android:background="@drawable/white_line" />
+    <View
+        android:id="@+id/fifth_line"
+        android:layout_width="20dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/red_line"
+        app:layout_constraintStart_toEndOf="@id/fourth_line"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/fifth_line"
-            android:layout_width="20dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/fourth_line"
-            android:background="@drawable/red_line" />
+    <View
+        android:id="@+id/sixth_line"
+        android:layout_width="20dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/green_line"
+        app:layout_constraintStart_toEndOf="@id/fifth_line"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/sixth_line"
-            android:layout_width="20dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="8dp"
-            android:layout_toEndOf="@+id/fifth_line"
-            android:background="@drawable/green_line" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/middleText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:fontFamily="@font/baloo"
+        android:text="@string/my_name"
+        android:textColor="#FFF"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/middleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/baloo"
-            android:text="@string/my_name"
-            android:textAlignment="center"
-            android:textColor="#FFF"
-            android:textSize="60sp" />
+    <TextView
+        android:id="@+id/middleText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo"
+        android:text="@string/school_number"
+        android:textColor="#FFF"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/middleText" />
 
-        <TextView
-            android:id="@+id/middleText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/baloo"
-            android:text="@string/school_number"
-            android:textAlignment="center"
-            android:textColor="#FFF"
-            android:textSize="60sp" />
+    <TextView
+        android:id="@+id/bottomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:fontFamily="cursive"
+        android:text="@string/mobile_programming_course_app"
+        android:textColor="#8A8585"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom">
-
-            <TextView
-                android:id="@+id/bottomText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="70dp"
-                android:fontFamily="cursive"
-                android:text="@string/mobile_programming_course_app"
-                android:textColor="#8A8585"
-                android:textSize="24sp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,70 +10,72 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/loginAppText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/bungee"
-        android:text="Mobile Programming"
+        android:text="@string/mobile_programming"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/loginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:fontFamily="@font/bungee"
-        android:text="Sign in to continue"
+        android:text="@string/sign_in_to_continue"
         android:textColor="@color/black"
         android:textSize="40sp" />
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginUsername"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:hint="@string/username"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/black"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:startIconDrawable="@drawable/ic_username"
+        app:startIconTint="@color/black">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginUsername"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/black"
-            app:errorEnabled="true"
-            app:errorIconDrawable="@null"
-            app:startIconDrawable="@drawable/ic_username"
-            app:startIconTint="@color/black">
+            android:inputType="text" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/loginPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@null"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/black"
+        app:startIconDrawable="@drawable/ic_password"
+        app:startIconTint="@color/black">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
-            app:errorEnabled="true"
-            app:errorIconDrawable="@null"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/black"
-            app:startIconDrawable="@drawable/ic_password"
-            app:startIconTint="@color/black">
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/attempt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/muli"
+        android:text="@string/attempt"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/loginButton"

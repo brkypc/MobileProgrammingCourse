@@ -13,7 +13,7 @@
     <string name="already_have_an_account_login">Already have an account? LOGIN</string>
     <string name="questions_list">Questions List</string>
     <string name="add_question">Add Question</string>
-    <string name="exams_list">Exams List</string>
+    <string name="exam_settings">Exam Settings</string>
     <string name="create_exam">Create Exam</string>
     <string name="new_user_sign_up">NEW USER? SIGN UP</string>
     <string name="birth_date">Birth Date</string>
@@ -22,7 +22,25 @@
     <string name="school_number">17011003</string>
     <string name="mobile_programming_course_app">Mobile Programming Course App</string>
     <string name="questions">Questions</string>
-    <string name="enter_your_question_here">Enter your question here</string>
-    <string name="enter_your_choice_here">Enter your choice here</string>
+    <string name="enter_question_here">Enter question here</string>
+    <string name="enter_answer_here">Enter answer here</string>
+    <string name="enter_choice_here">Enter choice here</string>
     <string name="save_question">Save Question</string>
+    <string name="sign_in_to_continue">Sign in to continue</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="update_question">Update Question</string>
+    <string name="no_question">There is no question in database.</string>
+    <string name="exam_duration">Exam Duration</string>
+    <string name="question_score">Question Score</string>
+    <string name="apply_settings">Apply Settings</string>
+    <string name="share_exam">Share Exam</string>
+    <string name="attachment">Attachment</string>
+    <string name="attempt">Attempt : 0/3</string>
+    <string-array name="exam_difficulty">
+        <item>Choose an exam difficulty…</item>
+        <item>Difficulty Level : 5 Choices</item>
+        <item>Difficulty Level : 4 Choices</item>
+        <item>Difficulty Level : 3 Choices</item>
+        <item>Difficulty Level : 2 Choices</item>
+    </string-array>
 </resources>

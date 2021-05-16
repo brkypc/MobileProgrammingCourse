@@ -48,6 +48,7 @@ public class AddUpdateQuestionActivity extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;
     Uri uriSound = null, uriImage = null, uriVideo = null;
+    String soundPath, imagePath, videoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,16 +104,10 @@ public class AddUpdateQuestionActivity extends AppCompatActivity {
 
             String uri = question.getUri();
             String[] uris = uri.split("#");
-            Log.d("myTAG",uris[0]);
-            Log.d("myTAG",uris[1]);
-            Log.d("myTAG",uris[2]);
 
-            if(!uris[0].equals("none"))
-                uriSound = Uri.parse(uris[0]);
-            if(!uris[1].equals("none"))
-                uriImage = Uri.parse(uris[1]);
-            if(!uris[2].equals("none"))
-                uriVideo = Uri.parse(uris[2]);
+            soundPath = uris[0];
+            imagePath = uris[1];
+            videoPath = uris[2];
 
             return false;
         }
@@ -153,13 +148,13 @@ public class AddUpdateQuestionActivity extends AppCompatActivity {
             if(validateFields()) {
                 StringBuilder stringBuilder = new StringBuilder();
                 if(uriSound != null) stringBuilder.append(getRealPathFromSound(uriSound)).append("#");
-                else stringBuilder.append("none#");
+                else stringBuilder.append(soundPath).append("#");
 
                 if(uriImage != null) stringBuilder.append(getRealPathFromImage(uriImage)).append("#");
-                else stringBuilder.append("none#");
+                else stringBuilder.append(imagePath).append("#");
 
                 if(uriVideo != null) stringBuilder.append(getRealPathFromVideo(uriVideo));
-                else stringBuilder.append("none");
+                else stringBuilder.append(videoPath);
 
                 databaseHelper.updateQuestion(new Question(question, textAnswer, textChoice1, textChoice2, textChoice3, textChoice4, stringBuilder.toString()), questionID);
                 Toast.makeText(AddUpdateQuestionActivity.this, "Question updated.", Toast.LENGTH_SHORT).show();

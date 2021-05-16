@@ -91,16 +91,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
         HamButton.Builder builderSound = new HamButton.Builder()
                 .listener(index -> {
-                    // When the boom-button corresponding this builder is clicked.
                     if(!uris[0].equals("none")) {
                         if (mediaPlayer.isPlaying()) {
-                            Log.d("myTAG", "yes");
+                            Toast.makeText(context, "Music is stopped", Toast.LENGTH_SHORT).show();
                             mediaPlayer.stop();
                         } else {
-                            Log.d("myTAG", "no");
                             try {
                                 mediaPlayer.prepare();
                                 mediaPlayer.start();
+                                Toast.makeText(context, "Music is playing", Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {
                                 Log.d("myTAG", e.getMessage());
                             }
@@ -116,7 +115,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         HamButton.Builder builderImage = new HamButton.Builder()
                 .listener(index -> {
-                    // When the boom-button corresponding this builder is clicked.
                     if(!uris[1].equals("none")) {
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_VIEW);
@@ -133,7 +131,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         HamButton.Builder builderVideo = new HamButton.Builder()
                 .listener(index -> {
-                    // When the boom-button corresponding this builder is clicked.
                     if(!uris[2].equals("none")) {
                         Intent intent = new Intent();
                         intent.setAction(Intent.ACTION_VIEW);
@@ -173,7 +170,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         HamButton.Builder builderUpdate = new HamButton.Builder()
                 .listener(index -> {
-                    // When the boom-button corresponding this builder is clicked.
                     Intent intent = new Intent(context, AddUpdateQuestionActivity.class);
                     intent.putExtra("questionID", questions.get(position).getId());
 
@@ -186,7 +182,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         HamButton.Builder builderDelete = new HamButton.Builder()
                 .listener(index -> {
-                    // When the boom-button corresponding this builder is clicked.
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("Delete Question?");
                     builder.setMessage("Are you sure you want to delete this question?");
